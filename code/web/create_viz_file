@@ -1,0 +1,2 @@
+#!/bin/bash
+../solve_subgraph_isomorphism sequential $1 $2 | grep "*viz*" | cut -c 7-

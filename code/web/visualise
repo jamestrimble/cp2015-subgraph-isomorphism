@@ -1,0 +1,3 @@
+#!/bin/bash
+./create_viz_file $1 $2 > vizfile.tmp.json
+python visualise.py vizfile.tmp.json
