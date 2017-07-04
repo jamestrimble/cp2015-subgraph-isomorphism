@@ -300,6 +300,29 @@ namespace
             ++nodes;
 
             Domain * branch_domain = nullptr;
+
+            //Visualise
+//            int patt_order = pattern_graphs[0].size();
+            int targ_order = target_graphs[0].size();
+            std::cout << "*viz*   [" << std::endl;
+            std::string sep {" "};
+            for (auto & d : domains) {
+                std::cout << "*viz* ";
+                std::cout << "    " << sep << "{\"v\":";
+                std::cout << d.v;
+                std::cout << ", \"domains\": [";
+                for (int i=0; i<targ_order; i++) {
+                    std::cout << d.values.test(i);
+                    if (i < targ_order-1)
+                        std::cout << ",";
+                }
+                std::cout << "]";
+                std::cout << "}";
+                std::cout << std::endl;
+                sep = ",";
+            }
+            std::cout << "*viz*   ]," << std::endl;
+
             for (auto & d : domains)
                 if ((! branch_domain) ||
                         d.popcount < branch_domain->popcount ||
@@ -635,6 +658,8 @@ namespace
             prepare_for_search(domains);
 
             Assignments assignments(pattern_size, std::numeric_limits<unsigned>::max());
+
+            std::cout << "*viz* [" << std::endl;
             switch (search(assignments, domains, result.nodes, max_graphs).first) {
                 case Search::Satisfiable:
                     save_result(assignments, result);
@@ -647,6 +672,7 @@ namespace
                     break;
             }
 
+            std::cout << "*viz* []]" << std::endl;
             return result;
         }
     };
